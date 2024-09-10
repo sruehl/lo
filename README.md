@@ -144,6 +144,7 @@ Supported helpers for maps:
 - [MapValues](#mapvalues)
 - [MapEntries](#mapentries)
 - [MapToSlice](#maptoslice)
+- [SortedMapIterator](#sortedmapiterator)
 
 Supported math helpers:
 
@@ -1333,6 +1334,23 @@ s := lo.MapToSlice(m, func(k int, v int64) string {
 ```
 
 [[play](https://go.dev/play/p/ZuiCZpDt6LD)]
+
+
+### SortedMapIterator
+
+Transforms a map into a sorted iterator
+
+```go
+m := map[int]int64{3: 4, 2: 5, 1: 6}
+
+for k,v := lo.SortedMapIterator(m) {
+	fmt.Printf("%d:%d,")
+}
+println()
+// 3:4,2:5,1:6
+```
+
+[[play](https://go.dev/play/p/todo)]
 
 ### Range / RangeFrom / RangeWithSteps
 

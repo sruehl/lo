@@ -1,5 +1,11 @@
 package lo
 
+import (
+	"cmp"
+	"iter"
+	"sort"
+)
+
 // Keys creates an array of the map keys.
 // Play: https://go.dev/play/p/Uu11fHASqrU
 func Keys[K comparable, V any](in ...map[K]V) []K {
@@ -294,4 +300,23 @@ func MapToSlice[K comparable, V any, R any](in map[K]V, iteratee func(key K, val
 	}
 
 	return result
+}
+
+// SortedMapIterator transforms a map into a sorted iterator
+// Play: https://go.dev/play/p/todo
+func SortedMapIterator[K cmp.Ordered, V any](m map[K]V) iter.Seq2[K, V] {
+	keys := make([]K, len(m))
+	i := 0
+	for k := range m {
+		keys[i] = k
+		i++
+	}
+	sort.Slice(keys, func(i, j int) bool { return keys[i] < keys[j] })
+	return func(yield func(K, V) bool) {
+		for _, k := range keys {
+			if !yield(k, m[k]) {
+				return
+			}
+		}
+	}
 }
